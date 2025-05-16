@@ -33,16 +33,17 @@ Para tal desafio será projetado da seguinte maneira:
 ## 🧱 **Estrutura do Projeto**
 
 ```
-plaintext
-CopiarEditar
-stream_api_project/
-│
-├── main.py                  # Ponto de entrada da API FastAPI
-├── auth.py                  # Lógica de autenticação JWT
-├── client.py                # Cliente para chamadas à API externa (Portal Stream)
-├── .env                     # Armazena credenciais e configurações
-├── requirements.txt         # Dependências do projeto
-└── README.md
+Desafio/
+        |__ /app
+        .       |__ __init__.py
+        .       |__ api.py
+        .       |__ auth.py
+        .       |__client.py
+        |__ .env
+        |__ external_api.py
+        |__ main.py
+        |__ requirements.txt
+        |__ README.md
 ```
 
 ## 📍Implementação
