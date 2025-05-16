@@ -38,7 +38,7 @@ Desafio/
         .       |__ __init__.py
         .       |__ api.py
         .       |__ auth.py
-        .       |__client.py
+        .       |__ client.py
         |__ .env
         |__ external_api.py
         |__ main.py
