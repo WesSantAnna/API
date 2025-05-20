@@ -41,11 +41,20 @@ class APIClient:
         response = requests.get(url, headers=headers)
         return response
     
-    def get_tree(self, access_token: str, site: int):
-        url = f"{self.base_url}/implantation/mobile/tree?site={site}"
+    def get_tree(self, id: str, access_token: str):
+        url = f"{self.base_url}/implantation/mobile/tree?site={id}"
         headers = {
             "Authorization" : f"Bearer {access_token}",
             "Content-Type": "application/json"
         }
-        response = requests.get(url, headers=headers, params={"site": site})
+        response = requests.get(url, headers=headers)
+        return response
+
+    def get_retrieve_asset_info(self, id: str, access_token: str):
+        url = f"{self.base_url}/implantation/mobile/info?site={id}"
+        headers = {
+            "Authorization" : f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+        response = requests.get(url, headers=headers)
         return response

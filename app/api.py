@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from .auth import get_security_scheme, verify_token
 from .client import APIClient
@@ -50,12 +50,25 @@ async def get_user_data(credentials: HTTPAuthorizationCredentials = Depends(secu
        )       
    return response.json()
 
+#está dando problema retorno 500 internal server error
 @router.get("/implantation/mobile/tree")
-async def get_tree(token: str, site: int):
-    response = api_client.get_tree(token,site)
+async def get_tree(id: str = Query(..., alias="site", description="Site id"),  credentials: HTTPAuthorizationCredentials = Depends(security_scheme)):
+    token = credentials.credentials
+    response = api_client.get_tree(id, token)
     if response.status_code != 200:
        raise HTTPException(
            status_code=response.status_code,
            detail="You need to send revision and site parameters!"
        )       
-    return response.json()   
+    return response.json()
+
+@router.get("/implantation/mobile/info")
+async def get_retrieve_asset_info(id: str = Query(..., alias="site", description="Site id"), credentials: HTTPAuthorizationCredentials = Depends(security_scheme)):
+    token = credentials.credentials
+    response = api_client.get_retrieve_asset_info(id, token)
+    if response.status_code != 200:
+        raise HTTPException(
+           status_code=response.status_code,
+           detail="Site id is required!"            
+        )
+    return response.json()
