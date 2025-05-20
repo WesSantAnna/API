@@ -68,8 +68,6 @@ A estrutura modular do projeto foi projetada visando **manutenibilidade e escala
 
 Essa divisão torna o projeto mais coeso e facilita a realização de testes. Foram implementados **testes individuais para cada rota**, com tratamento de erros e respostas padronizadas.
 
-![image.png](attachment:5077e528-f940-4ebf-b00e-06899cf060e1:image.png)
-
 ---
 
 ## ✅ Testes
