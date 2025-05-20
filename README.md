@@ -1,17 +1,22 @@
 ---
 
-# 🔐 Desafio: Integração com a Plataforma Portal Stream
+# 🔐 Desafio:
 
-Este desafio propõe o desenvolvimento de uma **API REST** utilizando o framework **FastAPI**, com foco em:
+ > Este desafio propõe o desenvolvimento de uma **API REST** utilizando o framework **FastAPI**, com foco em: 
+ >
 
-- Consumo de dados protegidos da plataforma **Portal Stream**
-- Autenticação via **JWT (JSON Web Token)**
+> - Consumo de dados protegidos da plataforma **Portal Stream**- Autenticação via **JWT (JSON Web Token)**
 - Estrutura modular e testável
 
 ---
 
-## 🧠 Projeto Lógico
+# 🧠 Projeto Lógico
 
+
+## 🔐 Desafio:
+
+  Este desafio propõe o desenvolvimento de uma **API REST** utilizando o framework **FastAPI**, com foco em: 
+ - Consumo de dados protegidos da plataforma **Portal Stream**- Autenticação via **JWT (JSON Web Token)**
 ---
 
 ## ✅ **Resumo**
@@ -75,7 +80,8 @@ A estrutura modular do projeto foi projetada visando **manutenibilidade e escala
 
 Essa divisão torna o projeto mais coeso e facilita a realização de testes. Foram implementados **testes individuais para cada rota**, com tratamento de erros e respostas padronizadas.
 
-![alt text](image.png)
+![image.png](attachment:5077e528-f940-4ebf-b00e-06899cf060e1:image.png)
+
 ---
 
 ## ✅ Testes
