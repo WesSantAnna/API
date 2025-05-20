@@ -3,28 +3,19 @@ import './App.css';
 
 function App() {
   const [dados, setDados] = useState([]);
-  const [user, setUser] = useState('');
+  const [username, setUser] = useState('');
   const [password, setPassword] = useState('');
 
-  // Requisição GET
-  useEffect(() => {
-    fetch('')
-      .then(res => res.json())
-      .then(data => setDados(data))
-      .catch(err => console.error("Erro em buscar dados", err));
-  }, []);
-
-  // Requisição POST
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const usuario = {
-      user,
+      username,
       password
     };
 
     try {
-      const res = await fetch('http://127.0.0.1:8000', {
+      const res = await fetch('http://127.0.0.1:8000/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -32,10 +23,14 @@ function App() {
         body: JSON.stringify(usuario)
       });
 
+      if (!res.ok) {
+        throw new Error(`Erro na requisição: ${res.status}`);
+      }
+
       const resposta = await res.json();
       console.log("Usuário enviado com sucesso:", resposta);
     } catch (err) {
-      console.error("Erro ao enviar usuário:", err);
+      console.error("Erro ao enviar usuário:", err.message);
     }
   };
 
@@ -54,7 +49,7 @@ function App() {
         <input
           type="text"
           placeholder="Usuário"
-          value={user}
+          value={username}
           onChange={(e) => setUser(e.target.value)}
         />
         <input
