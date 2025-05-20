@@ -1,11 +1,20 @@
 from fastapi import FastAPI, Depends
 from app.api import router as api_router
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
 app = FastAPI()
 app.include_router(api_router, prefix="/api")
+
+app.add_middleware(
+    CORSMiddleware,
+    alllow_origins=["*"],
+    alloq_credentials = True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 if __name__ == "__main__":
     import uvicorn
