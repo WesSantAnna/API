@@ -50,7 +50,6 @@ async def get_user_data(credentials: HTTPAuthorizationCredentials = Depends(secu
        )       
    return response.json()
 
-#está dando problema retorno 500 internal server error
 @router.get("/implantation/mobile/tree")
 async def get_tree(id: str = Query(..., alias="site", description="Site id"),  credentials: HTTPAuthorizationCredentials = Depends(security_scheme)):
     token = credentials.credentials
@@ -70,5 +69,16 @@ async def get_retrieve_asset_info(id: str = Query(..., alias="site", description
         raise HTTPException(
            status_code=response.status_code,
            detail="Site id is required!"            
+        )
+    return response.json()
+
+@router.get("/implantation/mobile/static")
+async def get_retrieve_static_data(credentials: HTTPAuthorizationCredentials = Depends(security_scheme)):
+    token = credentials.credentials
+    response = api_client.get_retrieve_static_data(token)
+    if response.status_code != 200:
+        raise HTTPException(
+           status_code=response.status_code,
+           detail=response.content         
         )
     return response.json()
