@@ -1,15 +1,3 @@
----
-
-# 🔐 Desafio:
-
- > Este desafio propõe o desenvolvimento de uma **API REST** utilizando o framework **FastAPI**, com foco em: 
- >
-
-> - Consumo de dados protegidos da plataforma **Portal Stream**- Autenticação via **JWT (JSON Web Token)**
-- Estrutura modular e testável
-
----
-
 # 🧠 Projeto Lógico
 
 
