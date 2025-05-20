@@ -82,3 +82,14 @@ async def get_retrieve_static_data(credentials: HTTPAuthorizationCredentials = D
            detail=response.content         
         )
     return response.json()
+
+@router.get("/implantation/mobile/static/get_lubricants")
+async def get_lubricants(credentials: HTTPAuthorizationCredentials = Depends(security_scheme)):
+    token = credentials.credentials
+    response = api_client.get_lubricants(token)
+    if response.status_code != 200:
+        raise HTTPException(
+           status_code=response.status_code,
+           detail="Authentication credentials were not provided."
+        )
+    return response.json()
