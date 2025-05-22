@@ -1,6 +1,8 @@
----
 
-# 🔐 Desafio: Integração com a Plataforma Portal Stream
+
+# 🧠 Visão Geral
+
+## 🔐 Desafio: Integração com a Plataforma Portal Stream
 
 Este desafio propõe o desenvolvimento de uma **API RESTful** utilizando o framework **FastAPI**, e a criação de um **frontend em React** para consumir essa API, com foco em:
 
@@ -8,10 +10,6 @@ Este desafio propõe o desenvolvimento de uma **API RESTful** utilizando o frame
 - Consumo de dados protegidos da **plataforma Portal Stream**
 - Arquitetura modular e testável
 - Comunicação segura entre backend e frontend
-
----
-
-## 🧠 Visão Geral
 
 ---
 
