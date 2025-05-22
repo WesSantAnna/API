@@ -21,13 +21,16 @@ A escolha pelo FastAPI se deu por sua simplicidade, performance e suporte nativo
 
 ---
 
-### 2. **Autenticação com JWT**
-
-Rotas implementadas:
+### 2. **Rotas implementadas**
 
 - `POST /token` – Geração de token JWT
-- `POST /token/refresh` – Renovação do token
 - `POST /token/verify` – Verificação de validade do token
+- `POST /token/refresh` – Renovação do token
+- `GET /usercorp` – Apresentação dos dados da rota usercorp
+- `GET /implantation/mobile/tree` – Apresentação dos dados da rota usercorp
+- `GET /implantation/mobile/info` – Apresentação dos dados da rota implantation/mobile/info
+- `GET /implantation/mobile/static` – Apresentação dos dados da rota implantation/mobile/static
+- `GET /implantation/mobile/static/get_lubricants` – Apresentação dos dados da rota implantation/mobile/static/get_lubricants
 
 ---
 
