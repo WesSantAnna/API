@@ -1,8 +1,9 @@
-// App.jsx
 import { useState, useEffect } from 'react';
 import { login, fetchUserData } from './ApiService';
+import './App.css';
 
 function App() {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [accessToken, setAccessToken] = useState(null);
@@ -21,12 +22,10 @@ function App() {
       setError(err.message);
     }
   };
-
   
   return (
     <div>
       {!accessToken ? (
-        // Formulário de login
         <form onSubmit={handleLogin}>
           <input
             type="text"
@@ -44,19 +43,19 @@ function App() {
           {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>
       ) : (
-        // Exibição dos dados após o login
+
         <div>
-          <h2>User Data</h2>
+          <h2>Rota Usercorp</h2>
           <pre>{JSON.stringify(userData?.user, null, 2)}</pre>
 
-          <h3>Corporations (First 10)</h3>
+          <h3>Corporação</h3>
           <ul>
             {userData?.corporation?.slice(0, 10).map((corp) => (
               <li key={corp.id}>{corp.name}</li>
             ))}
           </ul>
 
-          <h3>Sites (First 10)</h3>
+          <h3>Dados</h3>
           <ul>
             {userData?.sites?.slice(0, 10).map((site) => (
               <li key={site.id}>
