@@ -1,65 +1,71 @@
+// App.jsx
 import { useState, useEffect } from 'react';
-import './App.css';
+import { login, fetchUserData } from './ApiService';
 
 function App() {
-  const [dados, setDados] = useState([]);
-  const [username, setUser] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [accessToken, setAccessToken] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    const usuario = {
-      username,
-      password
-    };
-
     try {
-      const res = await fetch('http://127.0.0.1:8000/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(usuario)
-      });
-
-      if (!res.ok) {
-        throw new Error(`Erro na requisição: ${res.status}`);
-      }
-
-      const resposta = await res.json();
-      console.log("Usuário enviado com sucesso:", resposta);
+      const tokenData = await login(username, password);
+      setAccessToken(tokenData.access);
+      
+      const userDataResponse = await fetchUserData(tokenData.access); 
+      setUserData(userDataResponse);
     } catch (err) {
-      console.error("Erro ao enviar usuário:", err.message);
+      setError(err.message);
     }
   };
 
+  
   return (
     <div>
-      <h1>Dados da API</h1>
+      {!accessToken ? (
+        // Formulário de login
+        <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Login</button>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
+      ) : (
+        // Exibição dos dados após o login
+        <div>
+          <h2>User Data</h2>
+          <pre>{JSON.stringify(userData?.user, null, 2)}</pre>
 
-      <ul>
-        {dados.map((item, index) => (
-          <li key={index}>{JSON.stringify(item)}</li>
-        ))}
-      </ul>
+          <h3>Corporations (First 10)</h3>
+          <ul>
+            {userData?.corporation?.slice(0, 10).map((corp) => (
+              <li key={corp.id}>{corp.name}</li>
+            ))}
+          </ul>
 
-      <h2>Dados do usuário</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Usuário"
-          value={username}
-          onChange={(e) => setUser(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Enviar</button>
-      </form>
+          <h3>Sites (First 10)</h3>
+          <ul>
+            {userData?.sites?.slice(0, 10).map((site) => (
+              <li key={site.id}>
+                {site.name} (Corp ID: {site.corporation})
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
