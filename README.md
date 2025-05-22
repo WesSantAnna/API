@@ -1,88 +1,191 @@
-# 🧠 Projeto Lógico
-
-
-## 🔐 Desafio:
-
-  Este desafio propõe o desenvolvimento de uma **API REST** utilizando o framework **FastAPI**, com foco em: 
- - Consumo de dados protegidos da plataforma **Portal Stream**- Autenticação via **JWT (JSON Web Token)**
 ---
 
-## ✅ **Resumo**
+# 🔐 Desafio: Integração com a Plataforma Portal Stream
 
-### 1. **Criação de um projeto Python com FastAPI**
+Este desafio propõe o desenvolvimento de uma **API RESTful** utilizando o framework **FastAPI**, e a criação de um **frontend em React** para consumir essa API, com foco em:
 
-> A FastAPI foi escolhida por sua curva de aprendizado mais amigável em comparação ao Django, além de oferecer mais recursos nativos para APIs modernas do que o Flask. Essa escolha viabiliza uma implementação mais enxuta e eficiente.
-> 
+- Autenticação via **JWT (JSON Web Token)**
+- Consumo de dados protegidos da **plataforma Portal Stream**
+- Arquitetura modular e testável
+- Comunicação segura entre backend e frontend
 
 ---
 
-### 2. **Implementação de autenticação JWT completa**
-
-> Foram implementadas rotas para:
-> 
-> - `/token` – geração de token
-> - `/token/refresh` – renovação de token
-> - `/token/verify` – verificação de validade
+## 🧠 Visão Geral
 
 ---
 
-### 3. **Consumo de endpoint autenticado da API Portal Stream**
+## ✅ **Resumo da Solução**
 
-> Utiliza-se o JWT obtido na autenticação para acessar recursos protegidos da API externa.
-> 
+### 1. **Backend com FastAPI**
 
----
-
-### 4. **Exposição de endpoint próprio**
-
-> A API local expõe uma rota que recebe parâmetros do cliente, autentica-se via JWT, realiza uma chamada ao Portal Stream e retorna os dados processados ao consumidor.
-> 
+A escolha pelo FastAPI se deu por sua simplicidade, performance e suporte nativo à documentação automática com Swagger. Ele permite construir APIs modernas com validação de dados via **Pydantic** e recursos assíncronos.
 
 ---
 
-## 🧱 **Estrutura do Projeto**
+### 2. **Autenticação com JWT**
+
+Rotas implementadas:
+
+- `POST /token` – Geração de token JWT
+- `POST /token/refresh` – Renovação do token
+- `POST /token/verify` – Verificação de validade do token
+
+---
+
+### 3. **Integração com API externa protegida (Portal Stream)**
+
+A aplicação realiza autenticação via JWT e utiliza esse token para consumir endpoints protegidos da plataforma externa.
+
+---
+
+### 4. **Exposição de rota própria**
+
+A API local fornece um endpoint customizado que:
+
+- Recebe as credenciais do usuário
+- Realiza a autenticação com a API externa
+- Retorna os dados processados para o cliente frontend
+
+---
+
+### 5. **Frontend com React + Vite**
+
+Foi utilizado o framework **React**, inicializado com **Vite**, para criar uma interface web leve e responsiva. A comunicação com a API FastAPI ocorre via chamadas `fetch`.
+
+---
+
+### 6. **Visualização da Rota `usercorp`**
+
+Após o login, o frontend exibe os dados estruturados do usuário, separados em:
+
+- Informações do usuário (`user`)
+- Corporações (`corporation`)
+- Sites associados (`sites`)
+
+---
+
+## 🧱 Estrutura do Projeto
+
+### 📁 Backend (FastAPI)
 
 ```bash
-/API
-├── main.py          # Ponto de entrada da aplicação
-├── .env             # Variáveis de ambiente (tokens, URLs)
+/backend
+├── main.py            # Ponto de entrada da aplicação FastAPI
+├── .env               # Variáveis de ambiente (tokens, URLs, etc.)
 └── /app
     ├── __init__.py
-    ├── api.py       # Definição das rotas da API
-    ├── auth.py      # Lógica de autenticação com JWT
-    ├── client.py    # Integração com a API externa (Portal Stream)
-    └── schema.py    # Modelos Pydantic para validação e tipagem
-
+    ├── api.py         # Definição das rotas principais
+    ├── auth.py        # Lógica de autenticação JWT
+    ├── client.py      # Comunicação com a API externa
+    └── schema.py      # Modelos Pydantic para validação de dados
 ```
 
 ---
 
-## 📍 Implementação
+### 📁 Frontend (React com Vite)
 
-A estrutura modular do projeto foi projetada visando **manutenibilidade e escalabilidade**. As responsabilidades foram divididas em arquivos específicos, como:
+```bash
+/frontend
+├── index.html
+├── vite.config.js           # Configuração do servidor Vite (inclui proxy, se necessário)
+├── package.json
+└── /src
+    ├── App.jsx              # Componente principal da aplicação
+    ├── ApiService.jsx       # Módulo para autenticação e chamada de dados
+    ├── App.css              # Estilização da aplicação
+    └── main.jsx             # Ponto de entrada React
+```
 
-- `api.py`: centraliza as rotas locais.
-- `client.py`: lida com requisições à API externa.
-- `auth.py`: gerencia o fluxo de autenticação.
-- `schema.py`: define os modelos de entrada e saída.
+---
 
-Essa divisão torna o projeto mais coeso e facilita a realização de testes. Foram implementados **testes individuais para cada rota**, com tratamento de erros e respostas padronizadas.
+## 🛠️ Implementação
+
+### 🔹 Backend
+
+Cada módulo cumpre uma função específica:
+
+- `api.py`: define e organiza as rotas locais.
+- `auth.py`: contém a lógica para geração e validação de tokens JWT.
+- `client.py`: responsável por chamadas à API externa (Portal Stream).
+- `schema.py`: define os modelos de entrada/saída usando Pydantic.
+
+### 🔹 Frontend
+
+- `App.jsx`: componente principal da aplicação. Contém o formulário de login e exibe os dados da API após autenticação.
+- `ApiService.jsx`: módulo com as funções `login()` e `fetchUserData()`, que realizam chamadas para o backend.
+- `App.css`: arquivo de estilo da interface.
+- `vite.config.js`: pode ser configurado para redirecionar requisições à API backend via proxy.
 
 ---
 
 ## ✅ Testes
 
-Cada rota da aplicação possui **testes automatizados** que garantem:
+Foram implementados testes unitários e de integração para garantir:
 
 - Validação de parâmetros obrigatórios
-- Autenticação correta via token
-- Manipulação adequada de respostas externas
-- Tratamento de erros e respostas esperadas (ex.: 401, 404, 500)
+- Autenticação com token válido
+- Tratamento adequado de erros (ex: 401, 404, 500)
+- Consistência das respostas da API externa
+
+---
+
+## ▶️ Inicialização do Projeto
+
+### 🔧 Backend (FastAPI)
+
+```bash
+# Comando para iniciar o backend FastAPI
+uvicorn main:app --reload
+```
+
+- A API ficará disponível em: [http://127.0.0.1:8000](http://127.0.0.1:8000/)
+- A documentação interativa Swagger pode ser acessada em: http://127.0.0.1:8000/docs
+
+---
+
+### 💻 Frontend (React + Vite)
+
+```bash
+# Criar o projeto com Vite
+npm create vite@latest frontend --template react
+
+# Entrar na pasta e instalar dependências
+cd frontend
+npm install
+
+# Iniciar o servidor de desenvolvimento
+npm run dev
+```
+
+- A aplicação será servida em: [http://localhost:5173](http://localhost:5173/)
+
+---
+
+### 🔁 Comunicação Frontend ↔ Backend
+
+A integração só funciona corretamente com **CORS habilitado** no backend e os dois servidores (React e FastAPI) rodando simultaneamente.
+
+**Middleware CORS no FastAPI na main.py:**
+
+```python
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_methods=["GET", "POST"],
+    allow_credentials = True,
+    allow_headers=["*"],
+)
+```
 
 ---
 
 ## 🎯 Conclusão
 
-O projeto demonstra uma integração segura e organizada com APIs externas protegidas por JWT. A estrutura modular, o uso de tipagem com Pydantic e a implementação de testes garantem qualidade, clareza e facilidade de manutenção do código.
+O projeto demonstra uma arquitetura robusta, moderna e segura para consumir APIs externas com autenticação JWT. A separação clara entre responsabilidades (autenticação, chamadas externas, apresentação de dados) promove legibilidade e facilidade de manutenção.
+
+A aplicação também evidencia como uma integração entre **FastAPI + React** pode ser feita de forma escalável, cuidando de frontend e backend.
 
 ---
