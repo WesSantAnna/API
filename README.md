@@ -1,3 +1,5 @@
+# DESAFIO 1
+
 # FULLSTACK - Documentation
 
 This documentation has been created to guide developers about the FullStack aplications using  FastAPI and React.
@@ -38,15 +40,8 @@ node-v22.16.0-x64.exe
 # Version
 node --version #  -> v22.16.0 or superior
 
-# Create Project
-npm create vite@latest # Install the latest available versi
-
-name_project # Frontend
-
-main language # JavaScript
-
 # npm Install
-npm i react-router-dom axios # Install packages for route manipulation
+npm install
 
 # Run npm
 npm run dev # -> VITE v6.3.5  ready in 397 ms Local: http://localhost:5173/
@@ -58,6 +53,17 @@ npm run dev # -> VITE v6.3.5  ready in 397 ms Local: http://localhost:5173/
 
 > *http://127.0.0.1:8000/*
 > 
+
+---
+
+## .env
+
+```python
+API_URL = "URL do endpoint"
+USERNAME = " ************ "
+PASSWORD = " ********** "
+SECRET_KEY = "****"
+```
 
 ---
 
@@ -509,51 +515,4 @@ npm run dev # -> VITE v6.3.5  ready in 397 ms Local: http://localhost:5173/
 {
     "detail": "Authentication credentials were not provided."
 }
-```
-
-## Project Tree
-
-### Backend
-
-```powershell
-app/
-│   api.py
-│   auth.py
-│   client.py
-│   schema.py
-│   __init__.py
-```
-
----
-
-### Frontend
-
-```powershell
-Frontend/
-				src/
-						│   App.css
-						│   App.jsx
-						│   index.css
-						│   main.jsx
-						│
-						├───api
-						│       ApiService.jsx
-						│
-						└───routes
-						    │   Dashboard.jsx
-						    │   Login.jsx
-						    │   lubricants.jsx
-						    │   MobileInfo.jsx
-						    │   MobileTree.jsx
-						    │   Static.jsx
-						    │   usercorp.jsx
-						    │
-						    └───styles
-						            Dashboard.css
-						            Login.module.css
-						            lubricants.css
-						            MobileInfo.css
-						            MobileTree.css
-						            Static.css
-						            usercorp.css
 ```
