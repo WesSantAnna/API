@@ -10,7 +10,7 @@ export default function MobileTree() {
 
   const handleFetch = async () => {
     if (!siteId.trim()) {
-      setError('Por favor, insira um Site ID válido');
+      setError('Por favor, insira um Site ID');
       return;
     }
 
@@ -51,11 +51,7 @@ export default function MobileTree() {
             className="tree-search-button"
             disabled={isLoading}
           >
-            {isLoading ? (
-              <span className="loading-spinner"></span>
-            ) : (
-              'Buscar Dados'
-            )}
+            {isLoading ? 'Buscando...' : 'Buscar'}
           </button>
         </div>
         {error && <p className="tree-error-message">{error}</p>}
