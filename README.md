@@ -12,7 +12,7 @@ This documentation has been created to guide developers about the FullStack apli
 
 ```powershell
 # Python Installation
-.\python39-amd64-installer.exe
+https://www.python.org/downloads/
  
 # Version
 python --version # -> 13.3.3 or superior
@@ -35,7 +35,7 @@ fastapi dev main.py # Server started at http://127.0.0.1:8000
 
 ```powershell
 # Node LTS
-node-v22.16.0-x64.exe
+https://nodejs.org/en/download
 
 # Version
 node --version #  -> v22.16.0 or superior
