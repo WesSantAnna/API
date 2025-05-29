@@ -1,5 +1,3 @@
-# DESAFIO 1
-
 # FULLSTACK - Documentation
 
 This documentation has been created to guide developers about the FullStack aplications using  FastAPI and React.
