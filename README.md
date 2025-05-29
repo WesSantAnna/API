@@ -22,8 +22,7 @@ python -m venv venv
 .\venv\Scripts\Activate
  
 # Python Package Index 
-pip install "fastapi[standard]" pydantic requests 
-"python-jose[cryptography]" uvicorn python-dotenv fastapi-depends
+pip install "fastapi[standard]" pydantic requests "python-jose[cryptography]" uvicorn python-dotenv fastapi-depends
 
 # Run FastAPI
 fastapi dev main.py # Server started at http://127.0.0.1:8000
