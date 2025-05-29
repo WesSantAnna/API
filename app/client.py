@@ -59,6 +59,16 @@ class APIClient:
         response = requests.get(url, headers=headers)
         return response
     
+    def get_retrieve_static_data(self, access_token: str):
+        url = f"{self.base_url}/implantation/mobile/static/get_lubricants"
+        headers = {
+            "Authorization" : f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+        response = requests.get(url, headers=headers)
+        return response
+
+    
     def get_lubricants(self, access_token: str):
         url = f"{self.base_url}/implantation/mobile/static/get_lubricants"
         headers = {
