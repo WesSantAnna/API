@@ -1,0 +1,147 @@
+/* src/routes/styles/Static.css */
+
+.static-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.static-title {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.static-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: #9b59b6;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #7f8c8d;
+  font-size: 1.2rem;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  border: 5px solid rgba(155, 89, 182, 0.3);
+  border-radius: 50%;
+  border-top-color: #9b59b6;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-container {
+  background-color: #fdecea;
+  color: #d32f2f;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 800px;
+  margin: 2rem auto;
+  font-weight: 500;
+  border-left: 4px solid #d32f2f;
+}
+
+.static-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.static-card, .static-single {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.static-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.static-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.static-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #eee;
+  padding-bottom: 0.8rem;
+}
+
+.static-key {
+  font-weight: 600;
+  color: #9b59b6;
+  text-transform: capitalize;
+}
+
+.static-value {
+  color: #2c3e50;
+  text-align: right;
+  max-width: 60%;
+  word-break: break-word;
+}
+
+.static-value pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+  margin: 0;
+  font-size: 0.9rem;
+  background: #f9f9f9;
+  padding: 0.5rem;
+  border-radius: 4px;
+  text-align: left;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .static-container {
+    padding: 1.5rem;
+  }
+  
+  .static-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .static-row {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .static-value {
+    max-width: 100%;
+    text-align: left;
+  }
+  
+  .static-title {
+    font-size: 1.6rem;
+  }
+}
