@@ -21,7 +21,12 @@ export default function Lubricants() {
         loadData();
     }, []);
 
-    if (isLoading) return <div className="loading">Carregando...</div>;
+    if (isLoading) return (
+      <div className="usercorp-loading">
+        <div className="usercorp-spinner"></div>
+        <p>Carregando dados dos lubrificantes...</p>
+      </div>
+    );
     if (error) return <div className="error-message">{error}</div>;
 
     return (
