@@ -1,192 +1,562 @@
+# DESAFIO 1
 
+# FULLSTACK - Documentation
 
-# 🧠 Visão Geral
-
-## 🔐 Desafio: Integração com a Plataforma Portal Stream
-
-Este desafio propõe o desenvolvimento de uma **API RESTful** utilizando o framework **FastAPI**, e a criação de um **frontend em React** para consumir essa API, com foco em:
-
-- Autenticação via **JWT (JSON Web Token)**
-- Consumo de dados protegidos da **plataforma Portal Stream**
-- Arquitetura modular e testável
-- Comunicação segura entre backend e frontend
+This documentation has been created to guide developers about the FullStack aplications using  FastAPI and React.
 
 ---
 
-## ✅ **Resumo da Solução**
+## Main Installation
 
-### 1. **Backend com FastAPI**
+### Backend
 
-A escolha pelo FastAPI se deu por sua simplicidade, performance e suporte nativo à documentação automática com Swagger. Ele permite construir APIs modernas com validação de dados via **Pydantic** e recursos assíncronos.
+```powershell
+# Python Installation
+.\python39-amd64-installer.exe
+ 
+# Version
+python --version # -> 13.3.3 or superior
+ 
+# Virtual Environment
+python -m venv venv
+ 
+# Activate virtual Environment
+.\venv\Scripts\Activate
+ 
+# Python Package Index 
+pip install "fastapi[standard]" pydantic requests 
+"python-jose[cryptography]" uvicorn python-dotenv fastapi-depends
 
----
+# Run FastAPI
+fastapi dev main.py # Server started at http://127.0.0.1:8000
+                    # Server Documentation at http://127.0.0.1:8000/docs
+```
 
-### 2. **Rotas implementadas**
+### Frontend
 
-- `POST /token` – Geração de token JWT
-- `POST /token/verify` – Verificação de validade do token
-- `POST /token/refresh` – Renovação do token
-- `GET /usercorp` – Apresentação dos dados da rota usercorp
-- `GET /implantation/mobile/tree` – Apresentação dos dados da rota usercorp
-- `GET /implantation/mobile/info` – Apresentação dos dados da rota implantation/mobile/info
-- `GET /implantation/mobile/static` – Apresentação dos dados da rota implantation/mobile/static
-- `GET /implantation/mobile/static/get_lubricants` – Apresentação dos dados da rota implantation/mobile/static/get_lubricants
+```powershell
+# Node LTS
+node-v22.16.0-x64.exe
 
----
+# Version
+node --version #  -> v22.16.0 or superior
 
-### 3. **Integração com API externa protegida (Portal Stream)**
+# Create Project
+npm create vite@latest # Install the latest available versi
 
-A aplicação realiza autenticação via JWT e utiliza esse token para consumir endpoints protegidos da plataforma externa.
+name_project # Frontend
 
----
+main language # JavaScript
 
-### 4. **Exposição de rota própria**
+# npm Install
+npm i react-router-dom # Install package for route manipulation
 
-A API local fornece um endpoint customizado que:
-
-- Recebe as credenciais do usuário
-- Realiza a autenticação com a API externa
-- Retorna os dados processados para o cliente frontend
-
----
-
-### 5. **Frontend com React + Vite**
-
-Foi utilizado o framework **React**, inicializado com **Vite**, para criar uma interface web leve e responsiva. A comunicação com a API FastAPI ocorre via chamadas `fetch`.
-
----
-
-### 6. **Visualização da Rota `usercorp`**
-
-Após o login, o frontend exibe os dados estruturados do usuário, separados em:
-
-- Informações do usuário (`user`)
-- Corporações (`corporation`)
-- Sites associados (`sites`)
-
----
-
-## 🧱 Estrutura do Projeto
-
-### 📁 Backend (FastAPI)
-
-```bash
-/backend
-├── main.py            # Ponto de entrada da aplicação FastAPI
-├── .env               # Variáveis de ambiente (tokens, URLs, etc.)
-└── /app
-    ├── __init__.py
-    ├── api.py         # Definição das rotas principais
-    ├── auth.py        # Lógica de autenticação JWT
-    ├── client.py      # Comunicação com a API externa
-    └── schema.py      # Modelos Pydantic para validação de dados
+# Run npm
+npm run dev # -> VITE v6.3.5  ready in 397 ms Local: http://localhost:5173/
 ```
 
 ---
 
-### 📁 Frontend (React com Vite)
+## Base URL
 
-```bash
-/frontend
-├── index.html
-├── vite.config.js           # Configuração do servidor Vite (inclui proxy, se necessário)
-├── package.json
-└── /src
-    ├── App.jsx              # Componente principal da aplicação
-    ├── ApiService.jsx       # Módulo para autenticação e chamada de dados
-    ├── App.css              # Estilização da aplicação
-    └── main.jsx             # Ponto de entrada React
+> *http://127.0.0.1:8000/*
+> 
+
+---
+
+## Routes
+
+### **`POST` *Login (Token)***
+
+> The endpoint functions by generating access and refresh tokens, enabling the utilization of other endpoints.
+> 
+
+**Endpoint:** /token
+
+**Content-Type:** JSON
+
+**Access Level:** Any
+
+**Request Body Types:**
+
+- username `string` `required`
+- password `string` `required`
+
+**Request Body Example:**
+
+```json
+{
+    "username": "example",
+    "password": "example"
+}
+```
+
+**Response Example - 200:**
+
+`POST - /api/token`
+
+```json
+{
+	"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMzc5MDM2NSwiaWF0IjoxNzAzNzAzOTY1LCJqdGkiOiI1NzEzNzE0N2UxZjI0MzY1ODM2OTdmMWUxNWFlZTNmOSIsInVzZXJfaWQiOjIxMn0JalnbPJf-7U9QpbLJfi2a4LwwLRVP0OKhSp_RtdgyY",
+	"access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAzNzA0MjY1LCJpYXQiOjE3MDM3MDM5NjUsImp0aSI6IjdmOTZjZDExMzc4MDQzZDY5ZmRkZDgxYjliMjRmNDFhIiwidXNlcl9pZCI6MjEyfQnXPYekgNFsRSUdMrw3giB7pF21-KA5iOsTIHkxP5NLM"
+}
 ```
 
 ---
 
-## 🛠️ Implementação
+### **`POST` *Token Verify***
 
-### 🔹 Backend
+> The function of the endpoint is to verify the validity of the access token.
+> 
 
-Cada módulo cumpre uma função específica:
+**Endpoint:** /token/verify
 
-- `api.py`: define e organiza as rotas locais.
-- `auth.py`: contém a lógica para geração e validação de tokens JWT.
-- `client.py`: responsável por chamadas à API externa (Portal Stream).
-- `schema.py`: define os modelos de entrada/saída usando Pydantic.
+**Content-Type:** JSON
 
-### 🔹 Frontend
+**Access Level:** Any
 
-- `App.jsx`: componente principal da aplicação. Contém o formulário de login e exibe os dados da API após autenticação.
-- `ApiService.jsx`: módulo com as funções `login()` e `fetchUserData()`, que realizam chamadas para o backend.
-- `App.css`: arquivo de estilo da interface.
-- `vite.config.js`: pode ser configurado para redirecionar requisições à API backend via proxy.
+**Request Body Types:**
 
----
+- token `string` `required`
 
-## ✅ Testes
+**Request Body Example:**
 
-Foram implementados testes unitários e de integração para garantir:
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAzNzA0MjY1LCJpYXQiOjE3MDM3MDM5NjUsImp0aSI6IjdmOTZjZDExMzc4MDQzZDY5ZmRkZDgxYjliMjRmNDFhIiwidXNlcl9pZCI6MjEyfQnXPYekgNFsRSUdMrw3giB7pF21-KA5iOsTIHkxP5NLM"
+}
 
-- Validação de parâmetros obrigatórios
-- Autenticação com token válido
-- Tratamento adequado de erros (ex: 401, 404, 500)
-- Consistência das respostas da API externa
-
----
-
-## ▶️ Inicialização do Projeto
-
-### 🔧 Backend (FastAPI)
-
-```bash
-# Comando para iniciar o backend FastAPI
-uvicorn main:app --reload
 ```
 
-- A API ficará disponível em: [http://127.0.0.1:8000](http://127.0.0.1:8000/)
-- A documentação interativa Swagger pode ser acessada em: http://127.0.0.1:8000/docs
+**Response Example - 200:**
 
----
+`POST - /api/token/verify`
 
-### 💻 Frontend (React + Vite)
+**Response Error Example - 401 - Unauthorized:**
 
-```bash
-# Criar o projeto com Vite
-npm create vite@latest frontend --template react
-
-# Entrar na pasta e instalar dependências
-cd frontend
-npm install
-
-# Iniciar o servidor de desenvolvimento
-npm run dev
-```
-
-- A aplicação será servida em: [http://localhost:5173](http://localhost:5173/)
-
----
-
-### 🔁 Comunicação Frontend ↔ Backend
-
-A integração só funciona corretamente com **CORS habilitado** no backend e os dois servidores (React e FastAPI) rodando simultaneamente.
-
-**Middleware CORS no FastAPI na main.py:**
-
-```python
-from fastapi.middleware.cors import CORSMiddleware
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-    allow_methods=["GET", "POST"],
-    allow_credentials = True,
-    allow_headers=["*"],
-)
+```json
+{
+	"detail": "Token is invalid or expired",
+	"code": "token_not_valid"
+}
 ```
 
 ---
 
-## 🎯 Conclusão
+### **`POST` *Token Refresh***
 
-O projeto demonstra uma arquitetura robusta, moderna e segura para consumir APIs externas com autenticação JWT. A separação clara entre responsabilidades (autenticação, chamadas externas, apresentação de dados) promove legibilidade e facilidade de manutenção.
+> This endpoint is utilized to refresh a user's access token by utilizing the refresh token.
+> 
 
-A aplicação também evidencia como uma integração entre **FastAPI + React** pode ser feita de forma escalável, cuidando de frontend e backend.
+**Endpoint:** /token/refresh
+
+**Content-Type:** JSON
+
+**Access Level:** Any
+
+**Request Body Types:**
+
+- refresh `string` `required`
+
+**Request Body Example:**
+
+```json
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAzNzA0MjY1LCJpYXQiOjE3MDM3MDM5NjUsImp0aSI6IjdmOTZjZDExMzc4MDQzZDY5ZmRkZDgxYjliMjRmNDFhIiwidXNlcl9pZCI6MjEyfQnXPYekgNFsRSUdMrw3giB7pF21-KA5iOsTIHkxP5NLM"
+}
+```
+
+**Response Example - 200:**
+
+`POST - /api/token/refresh`
+
+```json
+{
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAzNzA0MjY1LCJpYXQiOjE3MDM3MDM5NjUsImp0aSI6IjdmOTZjZDExMzc4MDQzZDY5ZmRkZDgxYjliMjRmNDFhIiwidXNlcl9pZCI6MjEyfQnXPYekgNFsRSUdMrw3giB7pF21-KA5iOsTIHkxP5NLM"
+}
+```
+
+**Response Error Example - 401 - Unauthorized:**
+
+```json
+{
+	"detail": "Token is invalid or expired",
+	"code": "token_not_valid"
+}
+```
 
 ---
+
+### **`GET` *Retrieve User Data***
+
+> This endpoint is utilized to retrieve general user data and access information.
+> 
+
+**Endpoint:** /usercorp
+
+**Authentication:** Bearer: Access Token
+
+**Access Level:** Implanter
+
+**Response Example - 200:**
+
+`GET - /api/usercorp`
+
+```json
+{
+	"user": {
+		"id": 287,
+		"username": "EDUARDO.GREVE",
+		"first_name": "Eduardo",
+		"last_name": "Greve",
+		"email": "eduardo.greve@semeq.com"
+	},
+	"corporation": [
+		{
+			"id": 54,
+			"name": "SEMEQ"
+		}
+	],
+	"sites": [
+		{
+			"id": 10441,
+			"name": "PORTAL DAS ROSAS",
+			"corporation": 54
+		}
+	]
+}
+```
+
+**Some examples of error responses:**
+
+`GET - /api/usercorp`
+
+- 403 - Forbiden
+
+```json
+{
+	"detail": "Given token not valid for any token type",
+	"code": "token_not_valid",
+	"messages": [
+		{
+			"token_class": "AccessToken",
+			"token_type": "access",
+			"message": "Token is invalid or expired"
+		}
+	]
+}
+```
+
+`GET - /api/usercorp`
+
+- 403 - Forbiden
+
+```json
+{
+	"detail": "You do not have permission to perform this action."
+}
+```
+
+---
+
+### **`GET` *Retrieve Tree***
+
+> This endpoint is designed to retrieve the complete tree structure from a site, navigating to the asset level exclusively.
+> 
+
+**Endpoint:** /implantation/mobile/tree
+
+**Authentication:** Bearer: Access Token
+
+**Access Level:** Any
+
+**Request Params Types:**
+
+- site `integer` `required`
+
+**Request Body Types:**
+
+- revision `integer` `required`
+- nodes `object` `optional`
+
+**Response Example - 200:**
+
+`GET - /implantation/mobile/tree?site=10441`
+
+```json
+  {
+	"id": 10441,
+	"name": "PORTAL DAS ROSAS",
+	"revision": 28,
+	"tree": [
+		{
+			"id": 2016775,
+			"asset_type": 17,
+			"group": "motor",
+			"status": true,
+			"name": "TESTE",
+			"tag": null,
+			"level": 3,
+			"order": 1,
+			"parent": 2016771,
+			"site": 10441
+		},
+		{
+			"id": 2015883,
+			"asset_type": 17,
+			"group": "motor",
+			"status": true,
+			"name": "TESTE-5",
+			"tag": null,
+			"level": 3,
+			"order": 5,
+			"parent": 2015878,
+			"site": 10441
+		},...
+  ]}
+```
+
+**Response Error Example - 404 - Not Found:**
+
+`GET - /implantation/mobile/tree?site=10198989`
+
+```json
+  {
+    "detail": "You need to send revision and site parameters!"
+  }
+```
+
+---
+
+### **`GET` *Retrieve Asset Info***
+
+> This endpoint is responsible to retrieve asset information, encompassing general types such as groups or extending to the installation level (devices).
+> 
+
+**Endpoint:** /implantation/mobile/info
+
+**Authentication:** Bearer: Access Token
+
+**Access Level:** Any
+
+**Request Params Types:**
+
+- site `integer` `required`
+- id `integer` `required`
+- device_type `integer` `optional`
+
+**Response Example - 200:**
+
+`GET - /implantation/mobile/info?site=10441`
+
+```json
+{
+	"asset_info": [
+		{
+			"devices": [
+				{
+					"serial_number": "042",
+					"device_type_id": 1,
+					"directions": [
+						"X",
+						"Y",
+						"Z"
+					],
+					"services": [
+						1,
+						2
+					]
+				},...
+			],
+			"asset_id": 1291379,
+			"asset_type_id": 269,
+			"asset_type": "BOMBA GENÉRICA",
+			"asset_type_group": "pump",
+			"points": [
+				"28V",...
+			],
+			"fce": {
+				"asset_id": 1291379,
+				"size": "large",...
+			}
+		},...
+	]
+}
+```
+
+**Some examples of error responses:**
+
+`GET - /implantation/mobile/info`
+
+- 400 - Bad request
+
+```json
+{
+	"detail": "Site id is required!"
+}
+```
+
+`GET - /implantation/mobile/info?site=908080`
+
+- 400 - Bad request
+
+```json
+{
+	"detail": "Site not found or no device linked in this site"
+}
+```
+
+---
+
+### **`GET` *Retrieve Static Data***
+
+> This endpoint is utilized to fetch general and static data that can be employed to populate application databases.
+> 
+
+**Endpoint:** /implantation/mobile/static
+
+**Content-Type:** JSON
+
+**Authentication:** Bearer: Access Token
+
+**Access Level:** Any
+
+**Request Params Types:**
+
+- language `string` `required` `supported_languages = ["en_us", "pt_br"]`
+
+**Response Example - 200:**
+
+`GET - /implantation/mobile/static`
+
+```json
+{
+	"asset_group": [
+		{
+			"id": "motor",
+			"desc": "MOTOR"
+		},
+		{
+			"id": "gearbox",
+			"desc": "GEARBOX"
+		},...
+	],
+	"services": [
+		{
+			"id": 2,
+			"name": "TEMPERATURE"
+		},...
+	],
+	"device_type": [
+		{
+			"id": 59,
+			"name": "AXON VB",
+			"available_services": [
+				{
+					"id": 2,
+					"name": "TEMPERATURE"
+				},
+				{
+					"id": 1,
+					"name": "VIBRATION"
+				}
+			],
+			"bases": [
+				{
+					"id": 37,
+					"name": "STAINLESS VB2",
+					"default": true},
+				{
+					"id": 35,
+					"name": "NO BASE",
+					"default": false}
+			]
+		},...
+	]
+}
+```
+
+---
+
+### **`GET` *Get Lubricants***
+
+> This endpoint is responsible for searching for registered lubricants
+> 
+
+**Method:** **GET**
+
+**Endpoint:** /implantation/mobile/static/get_lubricants **Authentication:** Bearer: Access Token
+
+**Access Level:** Any
+
+**Response Example - 200:**
+
+```json
+[
+    {
+        "id": 2,
+        "name": "Fabricante",
+        "lubricants": [
+            {
+                "id": 1,
+                "name": "Tipo - Lubrificante - Norma"
+            }
+        ]
+    }
+]
+```
+
+**Response Example - 403:**
+
+```json
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
+
+## Project Tree
+
+### Backend
+
+```powershell
+app/
+│   api.py
+│   auth.py
+│   client.py
+│   schema.py
+│   __init__.py
+```
+
+---
+
+### Frontend
+
+```powershell
+Frontend/
+				src/
+						│   App.css
+						│   App.jsx
+						│   index.css
+						│   main.jsx
+						│
+						├───api
+						│       ApiService.jsx
+						│
+						└───routes
+						    │   Dashboard.jsx
+						    │   Login.jsx
+						    │   lubricants.jsx
+						    │   MobileInfo.jsx
+						    │   MobileTree.jsx
+						    │   Static.jsx
+						    │   usercorp.jsx
+						    │
+						    └───styles
+						            Dashboard.css
+						            Login.module.css
+						            lubricants.css
+						            MobileInfo.css
+						            MobileTree.css
+						            Static.css
+						            usercorp.css
+```
