@@ -49,7 +49,7 @@ name_project # Frontend
 main language # JavaScript
 
 # npm Install
-npm i react-router-dom # Install package for route manipulation
+npm i react-router-dom axios # Install packages for route manipulation
 
 # Run npm
 npm run dev # -> VITE v6.3.5  ready in 397 ms Local: http://localhost:5173/
